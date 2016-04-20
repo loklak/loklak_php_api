@@ -43,4 +43,10 @@ class Loklak {
 		return json_encode($request);
 	}
 
+	public function peers() {
+		$this->requestURL = $this->baseUrl . '/api/peers.json';
+		$request = Requests::get($this->requestURL, array('Accept' => 'application/json'));
+		return json_encode($request);
+	}
+
 }
