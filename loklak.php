@@ -49,4 +49,11 @@ class Loklak {
 		return json_encode($request);
 	}
 
+	public function status() {
+		$this->requestURL = $this->baseUrl . '/api/status.json';
+		$request = Requests::get($this->requestURL, array('Accept' => 'application/json'));
+		return json_encode($request, true);
+	}
+
+
 }
