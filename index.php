@@ -25,6 +25,8 @@ $values = $l->search("fossasia");
 $searchResponse = json_decode($values);
 $values = $l->geocode('Hyderabad');
 $geocodeResponse = json_decode($values);
+$values = $l->user('Daminisatya');
+$userResponse = json_decode($values);
 
 $bodyResponse = $helloResponse->body;
 $bodyResponse = json_decode($bodyResponse);
@@ -36,6 +38,8 @@ $searchResponse = $searchResponse->body;
 $searchResponse = json_decode($searchResponse, true);
 $geocodeResponse = $geocodeResponse->body;
 $geocodeResponse = json_decode($geocodeResponse, true);
+$userResponse = $userResponse->body;
+$userResponse = json_decode($userResponse, true);
 
 echo "<b>Given Base URL  - </b>" . $baseURL . "<br>";
 echo "<b>Hello JSON Test - </b>" . $bodyResponse->status . "<br>";
@@ -43,4 +47,5 @@ echo "<b>Peers JSON Test - </b>" . $peersResponse->count . " peers <br>";
 echo "<b>Status JSON Test - </b>" . $statusResponse['index']['messages']['size'] . " messages <br>";
 echo "<b>Search JSON Test - </b>" . $searchResponse['search_metadata']['hits'] . " hits <br>";
 echo "<b>Geocode JSON Test - </b>" . $geocodeResponse['locations']['Hyderabad']['country_code'] . " country code <br>";
+echo "<b>User JSON Test - </b>" . $userResponse['user']['name'] . " has </b>" . $userResponse['user']['followers_count'] . " followers and is following </b>" . $userResponse['user']['friends_count'] . " friends <br>";
 ?>
