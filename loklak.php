@@ -108,5 +108,32 @@ class Loklak {
 		}
 	}
 
-
+	public function user($name, $followers=null, $following=null) {
+		$this->requestURL = $this->baseUrl . '/api/user.json';
+		$this->name = $name;
+		$this->followers = $followers;
+		$this->following = $following;
+		if($name) {
+			$params = array('screen_name'=>$this->name);
+			if($followers) {
+				$params['screen_name'] = $params['screen_name'] . ' followers:'.$this->followers;
+			}
+			if($following) {
+				$params['screen_name'] = $params['screen_name'] . ' following:'.$this->following;
+			}
+			$request = Requests::request($this->requestURL, array('Accept' => 'application.json'), $params);
+			if ($request->status_code == 200)
+				return json_encode($request, true);
+			else {
+				$request = array();
+				return json_encode($request, true);
+			}
+		}
+		else {
+			$request = array();
+			$error = "No user name given to query. Please check and try again";
+			$request['error'] = array_push($request, $error);
+			return json_encode($request, true);
+		}
+	}
 }
