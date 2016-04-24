@@ -23,6 +23,7 @@ class Loklak {
 	private $action;
 	private $data;
 	private $requestURL;
+	private $place;
 
 	// Allow overloading of baseUrl for other Loklak Servers
 	// Useful for private loklak servers and IoT devices running
@@ -53,6 +54,58 @@ class Loklak {
 		$this->requestURL = $this->baseUrl . '/api/status.json';
 		$request = Requests::get($this->requestURL, array('Accept' => 'application/json'));
 		return json_encode($request, true);
+	}
+
+	public function search($query, $since=null, $until=null, $from_user=null, $count=null) {
+        $this->requestURL = $this->baseUrl . '/api/search.json';
+        $this->query = $query;
+        $this->since = $since;
+        $this->until = $until;
+        $this->from_user = $from_user;
+        $this->count = $count;
+        if($query){
+            $params = array('q'=>$this->query);
+        	if ($since) {
+            	$params['q'] = $params['q'] . ' since:'.$this->since;
+        	}
+        	if ($until) {
+         		$params['q'] = $params['q'] . ' until:'.$this->until;
+        	}
+         	if ($from_user) {
+         		$params['q'] = $params['q'] . ' from:'.$this->from_user;
+         	}
+         	if ($count) {
+        		$params['count'] = $this->count;
+         	}
+            $request = Requests::request($this->requestURL, array('Accept' => 'application.json'), $params);
+            if ($request->status_code == 200)
+                return json_encode($request, true);
+            else {
+                $request = array();
+                $error = "Looks like something is wrong. Request failed.";
+                $request['error'] = array_push($request, $error);
+                return json_encode($request, true);
+            }
+        }
+        else {
+            $request = array();
+            $error = "Looks like something is wrong. Request failed.";
+            $request['error'] = array_push($request, $error);
+            return json_encode($request, true);
+        }
+    }
+
+	public function geocode($place) {
+		$this->place = $place;
+		$this->requestURL = $this->baseUrl . '/api/geocode.json';
+		$params = array('places'=>$this->place);
+		$request = Requests::request($this->requestURL, array('Accept' => 'application.json'), $params);
+		if ($request->status_code == 200)
+			return json_encode($request, true);
+		else {
+			$request = array();
+			return json_encode($request, true);
+		}
 	}
 
 
