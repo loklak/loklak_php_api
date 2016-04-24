@@ -57,43 +57,43 @@ class Loklak {
 	}
 
 	public function search($query, $since=null, $until=null, $from_user=null, $count=null) {
-        $this->requestURL = $this->baseUrl . '/api/search.json';
-        $this->query = $query;
-        $this->since = $since;
-        $this->until = $until;
-        $this->from_user = $from_user;
-        $this->count = $count;
-        if($query){
-            $params = array('q'=>$this->query);
-        	if ($since) {
-            	$params['q'] = $params['q'] . ' since:'.$this->since;
-        	}
-        	if ($until) {
-         		$params['q'] = $params['q'] . ' until:'.$this->until;
-        	}
-         	if ($from_user) {
-         		$params['q'] = $params['q'] . ' from:'.$this->from_user;
-         	}
-         	if ($count) {
-        		$params['count'] = $this->count;
-         	}
-            $request = Requests::request($this->requestURL, array('Accept' => 'application.json'), $params);
-            if ($request->status_code == 200)
-                return json_encode($request, true);
-            else {
-                $request = array();
-                $error = "Looks like something is wrong. Request failed.";
-                $request['error'] = array_push($request, $error);
-                return json_encode($request, true);
-            }
-        }
-        else {
-            $request = array();
-            $error = "Looks like something is wrong. Request failed.";
-            $request['error'] = array_push($request, $error);
-            return json_encode($request, true);
-        }
-    }
+		$this->requestURL = $this->baseUrl . '/api/search.json';
+		$this->query = $query;
+		$this->since = $since;
+		$this->until = $until;
+		$this->from_user = $from_user;
+		$this->count = $count;
+		if($query) {
+			$params = array('q'=>$this->query);
+			if ($since) {
+				$params['q'] = $params['q'] . ' since:'.$this->since;
+			}
+			if ($until) {
+				$params['q'] = $params['q'] . ' until:'.$this->until;
+			}
+			if ($from_user) {
+				$params['q'] = $params['q'] . ' from:'.$this->from_user;
+			}
+			if ($count) {
+				$params['count'] = $this->count;
+			}
+			$request = Requests::request($this->requestURL, array('Accept' => 'application.json'), $params);
+			if ($request->status_code == 200)
+				return json_encode($request, true);
+			else {
+				$request = array();
+				$error = "Looks like something is wrong. Request failed.";
+				$request['error'] = array_push($request, $error);
+				return json_encode($request, true);
+			}
+		}
+		else {
+			$request = array();
+			$error = "Looks like something is wrong. Request failed.";
+			$request['error'] = array_push($request, $error);
+			return json_encode($request, true);
+		}
+	}
 
 	public function geocode($place) {
 		$this->place = $place;
