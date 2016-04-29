@@ -136,7 +136,7 @@ class Loklak {
 			return json_encode($request, true);
 		}
 	}
-	
+
 	public function settings() {
 		$this->requestURL = 'http://localhost:9000/api/settings.json';
 		$request = Requests::get($this->requestURL, array('Accept' => 'application/json'));
@@ -145,6 +145,43 @@ class Loklak {
 		else {
 			$request = array();
 			$error = "This API has access restrictions: only localhost clients are granted.";
+			$request['error'] = array_push($request, $error);
+			return json_encode($request, true);
+		}
+	}
+
+	public function suggest($query="", $count=null, $order=null, $orderby=null, $since=null, $until=null) {
+		$this->requestURL = $this->baseUrl . '/api/suggest.json';
+		$this->query = $query;
+		$this->count = $count;
+		$this->order = $order;
+		$this->orderby = $orderby;
+		$this->since = $since;
+		$this->until = $until;
+		if ($query) {
+			$params = array('q'=>$this->query);
+		}
+		if ($count) {
+			$params['count'] = $this->count;
+		}
+		if ($order) {
+			$params['order'] = $this->order;
+		}
+		if ($orderby) {
+			$params['orderby'] = $this->orderby;
+		}
+		if ($since) {
+			$params['since'] = $this->since;
+		}
+		if ($until) {
+			$params['until'] = $this->until;
+		}
+		$request = Requests::request($this->requestURL, array('Accept' => 'application.json'), $params);
+		if ($request->status_code == 200)
+			return json_encode($request, true);
+		else {
+			$request = array();
+			$error = "Something went wrong, looks like the server is down.";
 			$request['error'] = array_push($request, $error);
 			return json_encode($request, true);
 		}
