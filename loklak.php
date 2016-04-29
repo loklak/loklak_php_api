@@ -136,4 +136,17 @@ class Loklak {
 			return json_encode($request, true);
 		}
 	}
+	
+	public function settings() {
+		$this->requestURL = 'http://localhost:9000/api/settings.json';
+		$request = Requests::get($this->requestURL, array('Accept' => 'application/json'));
+		if ($request->status_code == 200)
+			return json_encode($request, true);
+		else {
+			$request = array();
+			$error = "This API has access restrictions: only localhost clients are granted.";
+			$request['error'] = array_push($request, $error);
+			return json_encode($request, true);
+		}
+	}
 }
