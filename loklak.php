@@ -150,7 +150,7 @@ class Loklak {
 		}
 	}
 
-	public function suggest($query="", $count=null, $order=null, $orderby=null, $since=null, $until=null) {
+	public function suggest($query, $count=null, $order=null, $orderby=null, $since=null, $until=null) {
 		$this->requestURL = $this->baseUrl . '/api/suggest.json';
 		$this->query = $query;
 		$this->count = $count;
@@ -158,7 +158,7 @@ class Loklak {
 		$this->orderby = $orderby;
 		$this->since = $since;
 		$this->until = $until;
-		if ($query) {
+		if($query) {
 			$params = array('q'=>$this->query);
 		}
 		if ($count) {
@@ -186,4 +186,49 @@ class Loklak {
 			return json_encode($request, true);
 		}
 	}
+
+	public function account($name, $action=null, $data=null) {
+		$this->requestURL = 'http://localhost:9000/api/settings.json';
+		$this->name = $name;
+		$this->action = $action;
+		$this->data = $data;
+		$headers = array();
+		$headers['User-Agent'] = "Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0";
+        $headers['From'] = "info@loklak.org";
+		if ($name) {
+			$params = array('screen_name'=>$this->name);
+			$request = Requests::request($this->requestURL, array('Accept' => 'application.json'), $params, $headers);
+			if ($request->status_code == 200)
+				return json_encode($request, true);
+			else {
+				$request = array();
+				$error = "Something went wrong, looks like the query is wrong.";
+				$request['error'] = array_push($request, $error);
+				return json_encode($request, true);
+			}
+		}
+		elseif ($this->action == 'update' && $data) {
+			$params['action'] = $this->action;
+			$params['data'] = $this->data;
+			$request = Requests::post($this->requestURL, array('Accept' => 'application.json'), $params, $headers);
+			if ($request->status_code == 200)
+				return json_encode($request, true);
+			else {
+				$request = array();
+				$error = "Something went wrong, looks like the query is wrong.";
+				$request['error'] = array_push($request, $error);
+				return json_encode($request, true);
+			}
+		}
+		else {
+			$request = array();
+			$error = "Something went wrong, looks like the query is wrong.";
+			$request['error'] = array_push($request, $error);
+			return json_encode($request, true);
+		}
+	}
 }
+
+
+
+	 
