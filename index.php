@@ -31,6 +31,11 @@ $values = $l->settings();
 $settingsResponse = json_decode($values);
 $values = $l->suggest('fossasia', 10, 'asc');
 $suggestResponse = json_decode($values);
+$values = $l->account('name');
+// Other possible inputs
+// $l->account('name', 'update', 'type');
+// $l->account(NULL, 'update', 'type');
+$accountResponse = json_decode($values);
 
 $bodyResponse = $helloResponse->body;
 $bodyResponse = json_decode($bodyResponse);
@@ -48,6 +53,8 @@ $settingsResponse = $settingsResponse->body;
 $settingsResponse = json_decode($settingsResponse, true);
 $suggestResponse = $suggestResponse->body;
 $suggestResponse = json_decode($suggestResponse, true);
+$accountResponse = $accountResponse->body;
+$accountResponse = json_decode($accountResponse, true);
 
 echo "<b>Given Base URL  - </b>" . $baseURL . "<br>";
 echo "<b>Hello JSON Test - </b>" . $bodyResponse->status . "<br>";
@@ -58,4 +65,5 @@ echo "<b>Geocode JSON Test - </b>" . $geocodeResponse['locations']['Hyderabad'][
 echo "<b>User JSON Test - </b>" . $userResponse['user']['name'] . " has </b>" . $userResponse['user']['followers_count'] . " followers and is following </b>" . $userResponse['user']['friends_count'] . " friends <br>";
 echo "<b>Settings JSON Test - </b>" . var_dump($settingsResponse) . " is an empty array <br>";
 echo "<b>Suggest JSON Test - </b>" . $suggestResponse['search_metadata']['hits'] . " hits <br>";
+echo "<b>Account JSON Test - </b>" . $accountResponse['search_metadata']['count'] . " counts <br>";
 ?>
