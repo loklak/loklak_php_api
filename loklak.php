@@ -1,5 +1,4 @@
 <?php
-
 // First, include Requests
 include('./Requests/library/Requests.php');
 
@@ -182,6 +181,51 @@ class Loklak {
 		else {
 			$request = array();
 			$error = "Something went wrong, looks like the server is down.";
+			$request['error'] = array_push($request, $error);
+			return json_encode($request, true);
+		}
+	}
+
+	public function aggregations($query="", $since=null, $until=null, $fields=null, $limit=6, $count=0) {
+		$this->requestURL = $this->baseUrl . '/api/search.json';
+		$this->query = $query;
+		$this->since = $since;
+		$this->until = $until;
+		$this->fields = $fields;
+		$this->limit = $limit;
+		$this->count = $count;
+		if ($query) {
+			$params = array('q'=>$this->query);
+			if ($since) {
+				$params['q'] = $params['q'] . ' since:'.$this->since;
+			}
+			if ($until) {
+				$params['q'] = $params['q'] . ' until:'.$this->until;
+			}
+			if ($fields) {
+				if (is_array($fields)) {
+					$params['fields'] = implode(',', $this->fields);
+				}
+				else {
+					$params['fields'] = $this->fields;
+				}
+			}
+			$params['limit'] = $this->limit;
+			$params['count'] = $this->count;
+			$params['source'] = "cache";
+			$request = Requests::request($this->requestURL, array('Accept' => 'application.json'), $params);
+			if ($request->status_code == 200)
+				return json_encode($request, true);
+			else {
+				$request = array();
+				$error = "Something went wrong, looks like the server is down.";
+				$request['error'] = array_push($request, $error);
+				return json_encode($request, true);
+			}
+		}
+		else {
+			$request = array();
+			$error = "No Query string has been given to run an aggregation query for";
 			$request['error'] = array_push($request, $error);
 			return json_encode($request, true);
 		}
