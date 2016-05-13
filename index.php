@@ -35,6 +35,8 @@ $values = $l->aggregations("spacex", "2016-04-01", "2016-04-06", array("mentions
 // $l->aggregations("fossasia", "2015-01-10", "2015-10-21", array("mentions","hashtags"), 10);
 // $l->aggregations("fossasia", "", "", "hashtags");
 $aggregationsResponse = json_decode($values);
+$values = $l->account('Daminisatya');
+$accountResponse = json_decode($values);
 
 $bodyResponse = $helloResponse->body;
 $bodyResponse = json_decode($bodyResponse);
@@ -54,6 +56,8 @@ $suggestResponse = $suggestResponse->body;
 $suggestResponse = json_decode($suggestResponse, true);
 $aggregationsResponse = $aggregationsResponse->body;
 $aggregationsResponse = json_decode($aggregationsResponse, true);
+$accountResponse = $accountResponse->body;
+$accountResponse = json_decode($accountResponse, true);
 
 echo "<b>Given Base URL  - </b>" . $baseURL . "<br>";
 echo "<b>Hello JSON Test - </b>" . $bodyResponse->status . "<br>";
@@ -65,4 +69,5 @@ echo "<b>User JSON Test - </b>" . $userResponse['user']['name'] . " has </b>" . 
 echo "<b>Settings JSON Test - </b>" . var_dump($settingsResponse) . " is an empty array <br>";
 echo "<b>Suggest JSON Test - </b>" . $suggestResponse['search_metadata']['hits'] . " hits <br>";
 echo "<b>Aggregations JSON Test - </b>" . $aggregationsResponse['search_metadata']['hits'] . " hits <br>";
+echo "<b>Account JSON Test -</b>" . $accountResponse['search_metadata']['count'] . " name<br>";
 ?>
