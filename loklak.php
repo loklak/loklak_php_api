@@ -55,6 +55,49 @@ class Loklak {
 		return json_encode($request, true);
 	}
 
+	public function account($name, $action=null, $data=null) {
+		// This API is localhost access ONLY.
+		$this->requestURL = 'http://localhost:9000/api/account.json';
+		$this->name = $name;
+		$this->action = $action;
+		$this->data = json_encode($data);
+		$headers = array();
+		$headers['User-Agent'] = "Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0";
+		$headers['From'] = "info@loklak.org";
+		if ($name) {
+			$params = array('screen_name'=>$this->name);
+			$request = Requests::request($this->requestURL, array('Accept' => 'application.json'), $params);
+			if ($request->status_code == 200) {
+				return json_encode($request, true);
+			}
+			else {
+				$request = array();
+				$error = "Something went wrong in fetching user account information, looks like the query is wrong";
+				$request['error'] = array_push($request, $error);
+				return json_encode($request, true);
+			}
+		}
+		elseif ($this->action == 'update' && $data) {
+			$params = array('data'=>json_encode($data), 'action'=>$this->action);
+			$request = Requests::request($this->requestURL, array('Accept' => 'application.json'), $params);
+			if ($request->status_code == 200) {
+				return json_encode($request, true);
+			}
+			else {
+				$request = array();
+				$error = "Something went wrong in updating, looks like the query is wrong";
+				$request['error'] = array_push($request, $error);
+				return json_encode($request, true);
+			}
+		}
+		else {
+			$request = array();
+			$error = "Something went wrong, looks like the query is wrong.";
+			$request['error'] = array_push($request, $error);
+			return json_encode($request, true);
+		}
+	}
+
 	public function search($query, $since=null, $until=null, $from_user=null, $count=null) {
 		$this->requestURL = $this->baseUrl . '/api/search.json';
 		$this->query = $query;
