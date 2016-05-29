@@ -34,7 +34,22 @@ class Loklak {
 	 *
 	 */
 	function __construct($baseUrl='http://loklak.org') {
-		$this->baseUrl = $baseUrl;
+		if ($baseUrl == 'http://loklak.org') {
+			$this->baseUrl = $baseUrl;
+		}
+		else {
+			if(preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $baseUrl)) {
+				$this->baseUrl = $baseUrl;
+				$helloStatus = $this->hello();
+				$helloResponse = json_decode($helloStatus);
+				$x = json_decode($helloResponse->body);
+				if ($x->status == 'ok') {
+					$this->baseUrl = $baseUrl;
+				} else {
+					$this->baseUrl = 'http://loklak.org';
+				}
+			}
+		}
 	}
 
 	public function hello() {
