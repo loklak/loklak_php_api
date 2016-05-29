@@ -290,4 +290,23 @@ class Loklak {
 		$request = Requests::get( $urlConstruct, array() );
 		return $request->body;
 	}
+
+	public function map($text='', $latitude='', $longitude='', $width='500', $height='500', $zoom='14'){
+		$params = array('text'=>$text, 'mlat'=>$latitude, 'mlon'=>$longitude, 'width'=>$width, 'height'=>$height, 'zoom'=>$zoom);
+		$urlConstruct = $this->baseUrl . '/vis/map.png.base64?text=' . $text;
+		if ($latitude != '' && $longitude != ''){
+			$urlConstruct = $urlConstruct . '&mlat=' . $latitude . '$mlon=' . $longitude;
+		}
+		if ($width != ''){
+			$urlConstruct = $urlConstruct . '&width=' . $width;
+		}
+		if ($height != ''){
+			$urlConstruct = $urlConstruct . '&height=' . $height;
+		}
+		if ($zoom != ''){
+			$urlConstruct = $urlConstruct . '&zoom=' . $zoom;
+		}
+		$request = Requests::get( $urlConstruct, array());
+		return $request->body;
+	}
 }
