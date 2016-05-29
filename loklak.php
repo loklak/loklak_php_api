@@ -273,4 +273,21 @@ class Loklak {
 			return json_encode($request, true);
 		}
 	}
+
+	// Markdown is a /vis/ API and returns the base64 string of the image.
+	public function markdown($text='', $color='', $background='', $padding='3') {
+		$params = array('text'=>$text, 'color_text'=>$color, 'color_background'=>$background, 'padding'=>$padding);
+		$urlConstruct = $this->baseUrl . '/vis/markdown.png.base64?text=' . $text;
+		if ($color != '') {
+			$urlConstruct = $urlConstruct . '&color_text=' . $color;
+		}
+		if ($background != '') {
+			$urlConstruct = $urlConstruct . '&color_background=' . $background;
+		}
+		if ($padding != '') {
+			$urlConstruct = $urlConstruct . '&padding=' . $padding;
+		}
+		$request = Requests::get( $urlConstruct, array() );
+		return $request->body;
+	}
 }
