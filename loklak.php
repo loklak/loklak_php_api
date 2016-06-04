@@ -120,7 +120,7 @@ class Loklak {
 		$this->until = $until;
 		$this->from_user = $from_user;
 		$this->count = $count;
-		if($query) {
+		if($query !== null) {
 			$params = array('q'=>$this->query);
 			if ($since) {
 				$params['q'] = $params['q'] . ' since:'.$this->since;
