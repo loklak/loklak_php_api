@@ -1,11 +1,10 @@
 <?php 
-add_action( 'admin_init' , 'register_fields'  );
 
+add_action( 'admin_init' , 'register_fields'  );
 
 function register_fields() {
 
     register_setting( 'loklak-settings', 'loklak-settings' );
-
     add_settings_section(
         'loklak_section', 
         null, 
@@ -34,7 +33,7 @@ function loklak_api_html_render(  ) {
 
 function loklak_settings_conf(  ) {
 
-	if( isset($_POST['loklak-settings']) ){
+    if( isset($_POST['loklak-settings']) ){
         update_option('loklak-settings[loklak_api]', true);
     }
     else {
@@ -43,5 +42,5 @@ function loklak_settings_conf(  ) {
 }
 
 function loklak_section_callback(  ) { 
-
+    // Add custom callback as per the requirements
 }
