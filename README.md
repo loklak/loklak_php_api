@@ -18,3 +18,22 @@ Once PHPUnit is installed, open XAMPP shell(for Windows users) / Terminal (for U
 Go to project root and type the following command:
 `phpunit Tests`
 This will execute all tests in `Tests` directory. 
+
+##Wordpress plugin developers
+
+To include loklak API support to your plugin. Follow the undermentioned steps:
+
+1. Add `loklak_php_api` submodule to your plugin directory  
+    `git submodule add https://github.com/loklak/loklak_php_api.git`
+
+2. Include loklak settings in your plugin settings option_page
+    ```
+    <?php 
+        settings_fields( 'loklak-settings' );
+        do_settings_sections( 'loklak-settings' );
+    ?>
+    ```
+
+3. Include `Lib/loklak-api-admin.php` and `loklak.php` in your plugin logic files as need be. 
+
+4. Loklak settings are stored as an array (`loklak-settings`) in your wordpress database. 
