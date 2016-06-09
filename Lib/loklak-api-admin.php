@@ -26,7 +26,12 @@ function loklak_api_html_render(  ) {
     $options = get_option( 'loklak-settings' );
     ?>
     <p>
-        <input type="checkbox" name="loklak-settings[loklak_api]" value="loklak"> Use anonymous API of loklak.org. <a href="http://loklak.org/"> Find out more </a> <br />
+        <input type="checkbox" name="loklak-settings[loklak_api]" value="loklak"
+        if(!empty($options['loklak_api']) && esc_attr($options['loklak_api']) == 'true'){
+            print ' checked="checked"';
+        }
+        > Use anonymous API of loklak.org. 
+        <a href="http://loklak.org/"> Find out more </a> <br />
     </p>
     <?php
 }
