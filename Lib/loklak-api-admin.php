@@ -8,7 +8,7 @@ function register_fields() {
 
     add_settings_section(
         'loklak_section', 
-        null, 
+        '1. Loklak API', 
         'loklak_section_callback', 
         'loklak-settings'
     );
@@ -36,8 +36,8 @@ function loklak_api_html_render(  ) {
                 print ' checked="checked"';
             }
         
-    echo '>Use anonymous API of loklak.org. <a href="http://loklak.org/">Find out more</a><br/>
-    </p>';
+    echo '>Use anonymous API of <a href="http://loklak.org/">loklak.org</a> and get plugin data through loklak (no registration and authentication required). <a href="http://loklak.org/">Find out more</a><br/>
+    </p><br/>';
 }
 
 function loklak_settings_conf(  ) {
@@ -54,8 +54,12 @@ function loklak_section_callback(  ) {
 
 }
 
+function loklak_settings_custom_script() {
+    
+}
+
 function loklak_settings_custom_style() {
-    wp_register_style( 'loklak-settings-css', 'Assets/css/loklak-api-admin.css');
+    wp_register_style( 'loklak-settings-css', plugin_dir_url( __FILE__ ).'../Assets/css/loklak-api-admin.css');
     wp_enqueue_style( 'loklak-settings-css' );
 }
 
