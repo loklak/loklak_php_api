@@ -1,10 +1,11 @@
 <?php 
-
 add_action( 'admin_init' , 'register_fields'  );
+
 
 function register_fields() {
 
     register_setting( 'loklak-settings', 'loklak-settings' );
+
     add_settings_section(
         'loklak_section', 
         null, 
@@ -17,23 +18,26 @@ function register_fields() {
         null, 
         'loklak_api_html_render', 
         'loklak-settings', 
-        'loklak_section' 
+        'loklak_section',
+        array('class' => 'loklak_settings')
     );
 }
 
 function loklak_api_html_render(  ) { 
 
-    $options = get_option( 'loklak-settings' );
-    ?>
+    $option = get_option( 'loklak-settings[loklak_api]' );
+    
+    echo '
     <p>
-        <input type="checkbox" name="loklak-settings[loklak_api]" value="loklak"
-        if(!empty($options['loklak_api']) && esc_attr($options['loklak_api']) == 'true'){
-            print ' checked="checked"';
-        }
-        > Use anonymous API of loklak.org. 
-        <a href="http://loklak.org/"> Find out more </a> <br />
-    </p>
-    <?php
+        <input type="checkbox" name="loklak-settings[loklak_api]" value="loklak"';
+        
+            if(!empty($option) && esc_attr($option) == true){
+                var_dump("1");
+                print ' checked="checked"';
+            }
+        
+    echo '>Use anonymous API of loklak.org. <a href="http://loklak.org/">Find out more</a><br/>
+    </p>';
 }
 
 function loklak_settings_conf(  ) {
@@ -47,5 +51,12 @@ function loklak_settings_conf(  ) {
 }
 
 function loklak_section_callback(  ) { 
-    // Add custom callback as per the requirements
+
 }
+
+function loklak_settings_custom_style() {
+    wp_register_style( 'loklak-settings-css', 'Assets/css/loklak-api-admin.css');
+    wp_enqueue_style( 'loklak-settings-css' );
+}
+
+add_action( 'admin_enqueue_scripts', 'loklak_settings_custom_style' );
