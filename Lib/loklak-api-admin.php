@@ -23,6 +23,14 @@ function register_fields() {
     );
 }
 
+function loklak_init( ) {
+    if(get_option( 'loklak_init' ) == false) {
+        var_dump("hello");
+        update_option( 'loklak-settings[loklak_api]', true );
+        update_option( 'loklak_init', true );
+    }
+}
+
 function loklak_api_html_render(  ) { 
 
     $option = get_option( 'loklak-settings[loklak_api]' );
@@ -63,4 +71,5 @@ function loklak_settings_custom_style() {
     wp_enqueue_style( 'loklak-settings-css' );
 }
 
+add_action( 'plugins_loaded', 'loklak_init' );
 add_action( 'admin_enqueue_scripts', 'loklak_settings_custom_style' );
