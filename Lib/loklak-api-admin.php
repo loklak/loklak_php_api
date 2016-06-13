@@ -30,6 +30,11 @@
         }
     }
 
+    function loklak_settings_get_option( ) {
+        $option = get_option( 'loklak-settings[loklak_api]' );
+        return $option;
+    }
+
     function loklak_api_html_render(  ) { 
 
         $option = get_option( 'loklak-settings[loklak_api]' );
