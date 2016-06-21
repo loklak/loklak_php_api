@@ -33,7 +33,6 @@
             <directory suffix=".php">./Requests/</directory>
             <file></file>
             <directory suffix=".php">./Tests/</directory>
-            <file></file>
         </blacklist>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php"></directory>
