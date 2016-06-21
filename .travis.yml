@@ -4,5 +4,11 @@ php:
   - '5.5'
   - '5.6'
   - '7.0'
+before_install:
+  - composer require phpunit/phpunit:4.8.* satooshi/php-coveralls:dev-master
+  - composer install --dev
 script: 
-- phpunit Tests
+  - phpunit Tests
+  - phpunit --coverage-clover ./Tests/Logs/clover.xml Tests 
+after_script:
+  - php vendor/bin/coveralls -v
