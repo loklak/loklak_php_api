@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    backupStaticAttributes="false"
+
+    cacheTokens="false"
+    colors="false"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    forceCoversAnnotation="false"
+    mapTestClassNameToCoveredClassName="false"
+    printerClass="PHPUnit_TextUI_ResultPrinter"
+
+    processIsolation="false"
+    stopOnError="false"
+    stopOnFailure="false"
+    stopOnIncomplete="false"
+    stopOnSkipped="false"
+    testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
+
+    strict="false"
+    verbose="false"
+    >
+
+    <testsuites>
+        <testsuite name="AllTests">
+        <directory>./Tests/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <blacklist>
+            <directory suffix=".php"></directory>
+            <file></file>
+        </blacklist>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php"></directory>
+            <file></file>
+            <exclude>
+                <directory suffix=".php">./Requests</directory>
+                <file></file>
+            </exclude>
+            <exclude>
+                <directory suffix=".php">./Tests</directory>
+                <file></file>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>
