@@ -39,3 +39,9 @@ To include loklak API support to your plugin. Follow the undermentioned steps:
 3. Include `Lib/loklak-api-admin.php` and `loklak.php` in your plugin logic files as need be. 
 
 4. Loklak settings are stored as an array (`loklak-settings`) in your wordpress database. 
+
+##Plugins with Loklak Integration
+
+The complete list of Wordpress plugins with Loklak Integration is present [here](https://github.com/loklak/loklak_wordpress_plugins/blob/master/Plugin-Readme.md).
+
+To test the plugins, refer to [this](https://loklak-wordpress.herokuapp.com) sample wordpress installation.	
