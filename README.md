@@ -1,5 +1,6 @@
 # Loklak PHP
 
+[![Build Status](https://travis-ci.org/loklak/loklak_php_api.svg?branch=master)](https://travis-ci.org/loklak/loklak_php_api)
 [![Coverage Status](https://coveralls.io/repos/github/loklak/loklak_php_api/badge.svg?branch=master)](https://coveralls.io/github/loklak/loklak_php_api?branch=master)
 [![Dependency Status](https://gemnasium.com/badges/github.com/loklak/loklak_php_api.svg)](https://gemnasium.com/github.com/loklak/loklak_php_api)
 
