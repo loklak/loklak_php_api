@@ -1,6 +1,7 @@
 # Loklak PHP
 
 [![Coverage Status](https://coveralls.io/repos/github/loklak/loklak_php_api/badge.svg?branch=master)](https://coveralls.io/github/loklak/loklak_php_api?branch=master)
+[![Dependency Status](https://gemnasium.com/badges/github.com/loklak/loklak_php_api.svg)](https://gemnasium.com/github.com/loklak/loklak_php_api)
 
 This is the PHP Client and PHP API for accessing the Loklak API
 It contains a series of calls that could be directly used for the requested JSON responses
