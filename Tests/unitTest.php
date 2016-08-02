@@ -60,7 +60,7 @@ class Testloklak extends \PHPUnit_Framework_TestCase
     }
 
     public function testUser() {
-        $result = $this->loklak->user('Khoslasopan');
+        $result = $this->loklak->user('Khoslasopan', 10 , 10);
         $userResponse = json_decode($result);
         $userResponse = $userResponse->body;
         $userResponse = json_decode($userResponse, true);
@@ -70,7 +70,7 @@ class Testloklak extends \PHPUnit_Framework_TestCase
     }
 
     public function testSearch() {
-        $result = $this->loklak->search('doctor who');
+        $result = $this->loklak->search('loklak', "2016-04-01", "2016-04-06", "KhoslaSopan", 10);
         $searchResponse = json_decode($result);
         $searchResponse = $searchResponse->body;
         $searchResponse = json_decode($searchResponse, true);
@@ -98,5 +98,17 @@ class Testloklak extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('queries', $suggestResponse);
         $this->assertTrue(sizeof($suggestResponse['queries']) >= 1);
         $this->assertEquals(sizeof($suggestResponse['queries']), $suggestResponse['search_metadata']['count']);
+    }
+
+    public function testMarkdown() {
+        $result = $this->loklak->markdown("hello world", "000000", "ffffff", "2");
+        $markdownResponse = $result;
+        $this->assertNotEquals($markdownResponse, "");
+    }
+
+    public function testMap() {
+        $result = $this->loklak->map("Hello World", "29.157176", "48.125024");
+        $mapResponse = $result;
+        $this->assertNotEquals($mapResponse, "");
     }
 }
