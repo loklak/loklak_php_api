@@ -89,4 +89,14 @@ class Testloklak extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('hashtags', $aggregationsResponse['aggregations']);
         $this->assertArrayHasKey('mentions', $aggregationsResponse['aggregations']);
     }
+
+    public function testSuggest() {
+        $result = $this->loklak->suggest("spacex", NULL, "asc", "query_count", "2016-07-01", "now");
+        $suggestResponse = json_decode($result);
+        $suggestResponse = $suggestResponse->body;
+        $suggestResponse = json_decode($suggestResponse, true);
+        $this->assertArrayHasKey('queries', $suggestResponse);
+        $this->assertTrue(sizeof($suggestResponse['queries']) >= 1);
+        $this->assertEquals(sizeof($suggestResponse['queries']), $suggestResponse['search_metadata']['count']);
+    }
 }
