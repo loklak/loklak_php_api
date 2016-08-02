@@ -60,7 +60,7 @@ class Testloklak extends \PHPUnit_Framework_TestCase
     }
 
     public function testUser() {
-        $result = $this->loklak->user('Khoslasopan', 10 , 10);
+        $result = $this->loklak->user('Khoslasopan', "10", "10");
         $userResponse = json_decode($result);
         $userResponse = $userResponse->body;
         $userResponse = json_decode($userResponse, true);
@@ -70,7 +70,7 @@ class Testloklak extends \PHPUnit_Framework_TestCase
     }
 
     public function testSearch() {
-        $result = $this->loklak->search('loklak', "2016-04-01", "2016-04-06", "KhoslaSopan", 10);
+        $result = $this->loklak->search('loklak', "2016-07-01", "2016-08-02", "KhoslaSopan", 10);
         $searchResponse = json_decode($result);
         $searchResponse = $searchResponse->body;
         $searchResponse = json_decode($searchResponse, true);

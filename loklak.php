@@ -200,10 +200,10 @@ class Loklak {
 		if($name) {
 			$params = array('screen_name'=>$this->name);
 			if($followers) {
-				$params['screen_name'] = $params['screen_name'] . ' followers:'.$this->followers;
+				$params['followers'] = $this->followers;
 			}
 			if($following) {
-				$params['screen_name'] = $params['screen_name'] . ' following:'.$this->following;
+				$params['following'] = $this->following;
 			}
 			$request = Requests::request($this->requestURL, array('Accept' => 'application.json'), $params);
 			if ($request->status_code == 200)
