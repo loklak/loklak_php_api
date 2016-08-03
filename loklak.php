@@ -64,6 +64,33 @@ class Loklak {
 		return json_encode($request);
 	}
 
+	public function push($data=null) {
+		$this->requestURL = $this->baseUrl . '/api/push.json';
+		$this->data = json_encode($data);
+		$headers = array();
+		$headers['User-Agent'] = "Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0";
+		$headers['From'] = "info@loklak.org";
+		if($data) {
+			$params = array('data'=>$this->data);
+			$request = Requests::request($this->requestURL, array('Accept' => 'application.json'), $params);
+			if ($request->status_code == 200) {
+				return json_encode($request, true);
+			}
+			else {
+				$request = array();
+				$error = "Something went wrong, looks like the query is wrong";
+				$request['error'] = array_push($request, $error);
+				return json_encode($request, true);
+			}
+		}
+		else {
+			$request = array();
+			$error = "Something went wrong, looks like the data is not correct.";
+			$request['error'] = array_push($request, $error);
+			return json_encode($request, true);
+		}
+	}
+
 	public function status() {
 		$this->requestURL = $this->baseUrl . '/api/status.json';
 		$request = Requests::get($this->requestURL, array('Accept' => 'application/json'));
@@ -93,7 +120,7 @@ class Loklak {
 			}
 		}
 		elseif ($this->action == 'update' && $data) {
-			$params = array('data'=>json_encode($data), 'action'=>$this->action);
+			$params = array('data'=>$this->data, 'action'=>$this->action);
 			$request = Requests::request($this->requestURL, array('Accept' => 'application.json'), $params);
 			if ($request->status_code == 200) {
 				return json_encode($request, true);
@@ -239,6 +266,30 @@ class Loklak {
 		else {
 			$request = array();
 			$error = "Something went wrong, looks like the server is down.";
+			$request['error'] = array_push($request, $error);
+			return json_encode($request, true);
+		}
+	}
+
+	public function susi($query=null) {
+		$this->requestURL = $this->baseUrl . '/api/susi.json';
+		$this->query = $query;
+		if($query) {
+			$params = array('q'=>$this->query);
+			$request = Requests::request($this->requestURL, array('Accept' => 'application.json'), $params);
+			if ($request->status_code == 200) {
+				return json_encode($request, true);
+			}
+			else {
+				$request = array();
+				$error = "Looks like Susi is not replying.";
+				$request['error'] = array_push($request, $error);
+				return json_encode($request, true);
+			}
+		}
+		else {
+			$request = array();
+			$error = "Please ask Susi something.";
 			$request['error'] = array_push($request, $error);
 			return json_encode($request, true);
 		}
