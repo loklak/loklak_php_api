@@ -59,6 +59,32 @@ class Testloklak extends \PHPUnit_Framework_TestCase
         $this->assertEquals(sizeof($peersResponse['peers']), $peersResponse['count']);
     }
 
+    public function testPush() {
+        $data='{   "statuses": 
+            [     
+                {       
+                    "id_str": "yourmessageid_1234",       
+                    "screen_name": "testuser",       
+                    "created_at": "2016-07-22T07:53:24.000Z",       
+                    "text": "The rain is spain stays always in the plain",       
+                    "source_type": "GENERIC",       
+                    "place_name": "Georgia, USA",       
+                    "location_point": [3.058579854228782,50.63296878274201],       
+                    "location_radius": 0,      
+                    "user": {         
+                        "user_id": "youruserid_5678", 
+                        "name": "Mr. Bob"
+                    }     
+                }   
+            ] 
+        }';
+        $result = $this->loklak->push(json_decode($data));
+        $pushResponse = json_decode($result);
+        $pushResponse = $pushResponse->body;
+        $pushResponse = json_decode($pushResponse, true);
+        $this->assertArrayHasKey('status', $pushResponse);
+    }
+
     public function testUser() {
         $result = $this->loklak->user('Khoslasopan', "10", "10");
         $userResponse = json_decode($result);
@@ -78,6 +104,14 @@ class Testloklak extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $searchResponse['statuses']);
         $this->assertTrue(sizeof($searchResponse['statuses']) >= 1);
         $this->assertEquals(sizeof($searchResponse['statuses']), $searchResponse['search_metadata']['count']);
+    }
+
+    public function testSusi() {
+        $result = $this->loklak->susi('Hi I am Zeus');
+        $susiResponse = json_decode($result);
+        $susiResponse = $susiResponse->body;
+        $susiResponse = json_decode($susiResponse, true);
+        $this->assertTrue(sizeof($susiResponse['answers']) >= 1);
     }
 
     public function testAggregations() {
