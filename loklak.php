@@ -140,13 +140,14 @@ class Loklak {
 		}
 	}
 
-	public function search($query, $since=null, $until=null, $from_user=null, $count=null) {
+	public function search($query, $since=null, $until=null, $from_user=null, $count=null, $source="twitter") {
 		$this->requestURL = $this->baseUrl . '/api/search.json';
 		$this->query = $query;
 		$this->since = $since;
 		$this->until = $until;
 		$this->from_user = $from_user;
 		$this->count = $count;
+		$this->source = $source;
 		if($query !== null) {
 			$params = array('q'=>$this->query);
 			if ($since) {
@@ -161,6 +162,7 @@ class Loklak {
 			if ($count) {
 				$params['count'] = $this->count;
 			}
+			$params['source'] = $this->source;
 			$request = Requests::request($this->requestURL, array('Accept' => 'application.json'), $params);
 			if ($request->status_code == 200)
 				return json_encode($request, true);
