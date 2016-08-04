@@ -6,8 +6,7 @@ php:
 before_install:
   - composer require phpunit/phpunit:4.8.* satooshi/php-coveralls:dev-master
   - composer install --dev
-script: 
-  - phpunit Tests
+script:
   - phpunit --coverage-clover ./Tests/Logs/clover.xml Tests 
 after_script:
   - php vendor/bin/coveralls -v
