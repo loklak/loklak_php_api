@@ -59,8 +59,34 @@ class Testloklak extends \PHPUnit_Framework_TestCase
         $this->assertEquals(sizeof($peersResponse['peers']), $peersResponse['count']);
     }
 
+    public function testPush() {
+        $data='{   "statuses": 
+            [     
+                {       
+                    "id_str": "yourmessageid_1234",       
+                    "screen_name": "testuser",       
+                    "created_at": "2016-07-22T07:53:24.000Z",       
+                    "text": "The rain is spain stays always in the plain",       
+                    "source_type": "GENERIC",       
+                    "place_name": "Georgia, USA",       
+                    "location_point": [3.058579854228782,50.63296878274201],       
+                    "location_radius": 0,      
+                    "user": {         
+                        "user_id": "youruserid_5678", 
+                        "name": "Mr. Bob"
+                    }     
+                }   
+            ] 
+        }';
+        $result = $this->loklak->push(json_decode($data));
+        $pushResponse = json_decode($result);
+        $pushResponse = $pushResponse->body;
+        $pushResponse = json_decode($pushResponse, true);
+        $this->assertArrayHasKey('status', $pushResponse);
+    }
+
     public function testUser() {
-        $result = $this->loklak->user('Khoslasopan');
+        $result = $this->loklak->user('Khoslasopan', "10", "10");
         $userResponse = json_decode($result);
         $userResponse = $userResponse->body;
         $userResponse = json_decode($userResponse, true);
@@ -70,7 +96,7 @@ class Testloklak extends \PHPUnit_Framework_TestCase
     }
 
     public function testSearch() {
-        $result = $this->loklak->search('doctor who');
+        $result = $this->loklak->search('loklak', "2016-07-01", "2016-08-02", "KhoslaSopan", 10);
         $searchResponse = json_decode($result);
         $searchResponse = $searchResponse->body;
         $searchResponse = json_decode($searchResponse, true);
@@ -78,6 +104,14 @@ class Testloklak extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $searchResponse['statuses']);
         $this->assertTrue(sizeof($searchResponse['statuses']) >= 1);
         $this->assertEquals(sizeof($searchResponse['statuses']), $searchResponse['search_metadata']['count']);
+    }
+
+    public function testSusi() {
+        $result = $this->loklak->susi('Hi I am Zeus');
+        $susiResponse = json_decode($result);
+        $susiResponse = $susiResponse->body;
+        $susiResponse = json_decode($susiResponse, true);
+        $this->assertTrue(sizeof($susiResponse['answers']) >= 1);
     }
 
     public function testAggregations() {
@@ -88,5 +122,27 @@ class Testloklak extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('statuses', $aggregationsResponse);
         $this->assertArrayHasKey('hashtags', $aggregationsResponse['aggregations']);
         $this->assertArrayHasKey('mentions', $aggregationsResponse['aggregations']);
+    }
+
+    public function testSuggest() {
+        $result = $this->loklak->suggest("spacex", NULL, "asc", "query_count", "2016-07-01", "now");
+        $suggestResponse = json_decode($result);
+        $suggestResponse = $suggestResponse->body;
+        $suggestResponse = json_decode($suggestResponse, true);
+        $this->assertArrayHasKey('queries', $suggestResponse);
+        $this->assertTrue(sizeof($suggestResponse['queries']) >= 1);
+        $this->assertEquals(sizeof($suggestResponse['queries']), $suggestResponse['search_metadata']['count']);
+    }
+
+    public function testMarkdown() {
+        $result = $this->loklak->markdown("hello world", "000000", "ffffff", "2");
+        $markdownResponse = $result;
+        $this->assertNotEquals($markdownResponse, "");
+    }
+
+    public function testMap() {
+        $result = $this->loklak->map("Hello World", "29.157176", "48.125024");
+        $mapResponse = $result;
+        $this->assertNotEquals($mapResponse, "");
     }
 }
