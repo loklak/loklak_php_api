@@ -95,6 +95,15 @@ class Testloklak extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('screen_name', $userResponse['user']);
     }
 
+    public function testSettings() {
+        $result = $this->loklak->settings();
+        $settingsResponse = json_decode($result, true);
+        if(getenv('TRAVIS') == true)
+            $this->assertEquals($settingsResponse[0], "This API has access restrictions: only localhost clients are granted.");
+        else 
+            $this->assertArrayHasKey('status_code', $settingsResponse);
+    }
+
     public function testSearch() {
         $result = $this->loklak->search('loklak', "2016-07-01", "2016-08-02", "KhoslaSopan", 10);
         $searchResponse = json_decode($result);
