@@ -99,7 +99,7 @@ class Loklak {
 
 	public function account($name, $action=null, $data=null) {
 		// This API is localhost access ONLY.
-		$this->requestURL = 'http://localhost:9000/api/account.json';
+		$this->requestURL = $this->baseUrl . '/api/account.json';
 		$this->name = $name;
 		$this->action = $action;
 		$this->data = json_encode($data);
@@ -224,7 +224,7 @@ class Loklak {
 	}
 
 	public function settings() {
-		$this->requestURL = 'http://localhost:9000/api/settings.json';
+		$this->requestURL = $this->baseUrl . '/api/settings.json';
 		$request = Requests::get($this->requestURL, array('Accept' => 'application/json'));
 		if ($request->status_code == 200)
 			return json_encode($request, true);
