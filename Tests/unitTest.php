@@ -95,8 +95,40 @@ class Testloklak extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('screen_name', $userResponse['user']);
     }
 
+    public function testSettings() {
+        $result = $this->loklak->settings();
+        $settingsResponse = json_decode($result, true);
+        if(getenv('TRAVIS') == true)
+            $this->assertEquals($settingsResponse[0], "This API has access restrictions: only localhost clients are granted.");
+        else 
+            $this->assertEquals('200', $settingsResponse['status_code']);
+    }
+
+    public function testAccount() {
+        // Test for screen_name
+        $result = $this->loklak->account("test");
+        $accountSettings = json_decode($result, true);
+        if(getenv('TRAVIS') == true)
+            $this->assertEquals($accountSettings[0], "This API has access restrictions: only localhost clients are granted.");
+        else 
+            $this->assertEquals('200', $settingsResponse['status_code']);
+
+        //Test for updating account info
+        $data = '{
+            "screen_name":"test",
+            "oauth_token":"abc",
+            "oauth_token_secret":"def"
+        }';
+        $result = $this->loklak->account(NULL, "update", json_decode($data));
+        $accountSettings = json_decode($result, true);
+        if(getenv('TRAVIS') == true)
+            $this->assertEquals($accountSettings[0], "This API has access restrictions: only localhost clients are granted.");
+        else 
+            $this->assertEquals('200', $settingsResponse['status_code']);
+    }
+
     public function testSearch() {
-        $result = $this->loklak->search('loklak', "2016-07-01", "2016-08-02", "KhoslaSopan", 10);
+        $result = $this->loklak->search('loklak', "2016-07-01", "2016-08-02", "KhoslaSopan", 10, "cache");
         $searchResponse = json_decode($result);
         $searchResponse = $searchResponse->body;
         $searchResponse = json_decode($searchResponse, true);
