@@ -7,7 +7,10 @@ class Testloklak extends \PHPUnit_Framework_TestCase
     private $loklak;
 
     public function setUp() {
-        $this->loklak = new Loklak();
+        $baseUrl = 'http://localhost:9000';       
+        if(getenv('TRAVIS') == true)
+            $baseUrl = 'http://loklak.org';
+        $this->loklak = new Loklak($baseUrl);
     }
 
     public function testStatus() {

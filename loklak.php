@@ -100,7 +100,7 @@ class Loklak {
 	public function account($name, $action=null, $data=null) {
 		// This API is localhost access ONLY.
 		$this->requestURL = $this->baseUrl . '/api/account.json';
-		if($this->requestURL != 'http://localhost:9000') {
+		if($this->baseUrl != 'http://localhost:9000') {
 			$request = array();
 			$error = "This API has access restrictions: only localhost clients are granted.";
 			$request['error'] = array_push($request, $error);
@@ -231,7 +231,7 @@ class Loklak {
 
 	public function settings() {
 		$this->requestURL = $this->baseUrl . '/api/settings.json';
-		if($this->requestURL != 'http://localhost:9000') {
+		if($this->baseUrl != 'http://localhost:9000') {
 			$request = array();
 			$error = "This API has access restrictions: only localhost clients are granted.";
 			$request['error'] = array_push($request, $error);
