@@ -1,6 +1,7 @@
 <?php
 // First, include Requests
-include(dirname(__FILE__).'/Requests/library/Requests.php');
+if(!class_exists('Requests'))
+	include(dirname(__FILE__).'/Requests/library/Requests.php');
 
 // Next, make sure Requests can load internal classes
 Requests::register_autoloader();
