@@ -8,7 +8,8 @@ Requests::register_autoloader();
 
 class Loklak {
 
-	private $baseUrl;
+	private $baseUrl = 'http://api.loklak.org';
+	private $baseUrlSusi = 'https://api.susi.ai';
 	private $name;
 	private $followers;
 	private $following;
@@ -34,8 +35,8 @@ class Loklak {
 	 * @params String $baseUrl
 	 *
 	 */
-	function __construct($baseUrl='http://loklak.org') {
-		if ($baseUrl == 'http://loklak.org') {
+	function __construct($baseUrl='http://api.loklak.org') {
+		if ($baseUrl == 'http://api.loklak.org') {
 			$this->baseUrl = $baseUrl;
 		}
 		else {
@@ -47,7 +48,7 @@ class Loklak {
 				if ($x->status == 'ok') {
 					$this->baseUrl = $baseUrl;
 				} else {
-					$this->baseUrl = 'http://loklak.org';
+					$this->baseUrl = 'http://api.loklak.org';
 				}
 			}
 		}
@@ -287,7 +288,7 @@ class Loklak {
 	}
 
 	public function susi($query=null) {
-		$this->requestURL = $this->baseUrl . '/api/susi.json';
+		$this->requestURL = $this->baseUrlSusi . '/susi/chat.json';
 		$this->query = $query;
 		if($query) {
 			$params = array('q'=>$this->query);
